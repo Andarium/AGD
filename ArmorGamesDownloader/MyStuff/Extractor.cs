@@ -6,19 +6,71 @@ using System.IO;
 using System.Text.RegularExpressions;
 using System.Text;
 using MoreLinq;
+using ArmorGamesDownloader.Properties;
+using ArmorGamesDownloader.Extensions;
 
 namespace ArmorGamesDownloader
 {
+    public enum SiteNameEnum
+    {
+        [EnumExtension.StringValue("armorgames.com")]
+        Armorgames,
+        [EnumExtension.StringValue("kongregate.com")]
+        Kongregate,
+        [EnumExtension.StringValue("newgrounds.com")]
+        Newgrounds,
+        [EnumExtension.StringValue("twotowersgames.com")]
+        Twotowersgames,
+        [EnumExtension.StringValue("thepodge.co.uk")]
+        Thepodge,
+        [EnumExtension.StringValue("stickpage.com")]
+        Stickpage,
+        [EnumExtension.StringValue("likwidgames.com")]
+        Likwidgames,
+        [EnumExtension.StringValue("swartag.com")]
+        Swartag,
+        [EnumExtension.StringValue("jayisgames.com")]
+        Jayisgames,
+        [EnumExtension.StringValue("barbarian-games.com")]
+        Barbariangames,
+        [EnumExtension.StringValue("notdoppler.com")]
+        Notdoppler,
+        [EnumExtension.StringValue("gamesfree.ca")]
+        Gamesfreeca,
+        [EnumExtension.StringValue("crazymonkeygames.com")]
+        Crazymonkeygames,
+        [EnumExtension.StringValue("maxgames.com")]
+        Maxgames,
+        [EnumExtension.StringValue("arcadebomb.com")]
+        Arcadebomb,
+        [EnumExtension.StringValue("arcadetown.com")]
+        Arcadetown,
+        [EnumExtension.StringValue("flashgames247")]
+        Flashgames247,
+        [EnumExtension.StringValue("belugerinstudios.com")]
+        Belugerin,
+        [EnumExtension.StringValue("box10.com")]
+        Box10,
+        [EnumExtension.StringValue("gamesfree.com")]
+        Gamesfreecom,
+        [EnumExtension.StringValue("funnygames.ru")]
+        Funnygames,
+        [EnumExtension.StringValue("!@#$%^&*()_+=-")]
+        Other,
+        [EnumExtension.StringValue("!@#$%^&*()_+=-")]
+        Common
+    };
+    
     public static class Extractor
     {
-        private static Regex swfRegex = new Regex(@"[\[\(\)\]a-zA-Z0-9%:_/\.=-]+\.swf");
-        private static Regex tempRegex1, tempRegex2;
-        private static Uri tempUri;
+        #region Variables
         public static Boolean UsingProxy = false;
+        private static Regex swfRegex = new Regex(Resources.strRegexSwf);
+        private static Regex tempRegex1, tempRegex2;
+        private static Uri tempUri;        
         private static Boolean FindCorrectName = true;
         private static String tempName = "";
-      
-
+        #endregion
 
         public static Boolean Extract(ref GameData gd, String stringHtml, String stringURL = "")
         {
@@ -42,7 +94,7 @@ namespace ArmorGamesDownloader
                                     {
                                         Link = tempUri.AbsoluteUri,
                                         OriginalName = tempUri.Segments.Last(), //Извлекаем оригинальное имя файла
-                                        CorrectName = NameFix((FindCorrectName) ? tempRegex2.Match(stringHtml).Value : tempName) //Правильное имя файла игры
+                                        CorrectName = FixGameName((FindCorrectName) ? tempRegex2.Match(stringHtml).Value : tempName) //Правильное имя файла игры
                                     });                          
                             }
                             gd.Reset();
@@ -114,7 +166,10 @@ namespace ArmorGamesDownloader
                             if (r.IsMatch(stringHtml))
                             {
                                 gd.ExternalLink = true;
-                                gd.CurrentLink = "http://www.flashgames247.com/" + r.Match(stringHtml).Value;
+                                gd.FileList.Add(new GameData.FileData()
+                                    {
+                                        Link = "http://www.flashgames247.com/" + r.Match(stringHtml).Value
+                                    });
                                 return false;
                             }
                         }
@@ -134,15 +189,8 @@ namespace ArmorGamesDownloader
                                 {
                                     Link = tempUri.AbsoluteUri,
                                     OriginalName = tempUri.Segments.Last(), //Извлекаем оригинальное имя файла
-                                    CorrectName = NameFix(tempRegex2.Match(stringHtml).Value) //Правильное имя файла игры
+                                    CorrectName = FixGameName(tempRegex2.Match(stringHtml).Value) //Правильное имя файла игры
                                 });
-
-
-
-                                /*gd.LinkList.Add(tempUri.AbsoluteUri);
-                                gd.OriginalNamesList.Add(tempUri.Segments.Last()); //Извлекаем оригинальное имя файла
-                                gd.CorrectName = new Regex("(?<=title>)[^-]+(?= -)").Match(stringHtml).Value; //Правильное имя файла игры
-                                gd.CorrectNamesList.Add(gd.CorrectName.Replace(": ", " - ")); */
                                 gd.Reset();
                                 break;
                             }
@@ -181,7 +229,7 @@ namespace ArmorGamesDownloader
                             {
                                 Link = tempUri.AbsoluteUri,
                                 OriginalName = tempUri.Segments.Last(), //Извлекаем оригинальное имя файла
-                                CorrectName = NameFix(tempRegex2.Match(stringHtml).Value) //Правильное имя файла игры
+                                CorrectName = FixGameName(tempRegex2.Match(stringHtml).Value) //Правильное имя файла игры
                             });
                             /*
                             gd.LinkList.Add(tempUri.AbsoluteUri);
@@ -295,7 +343,7 @@ namespace ArmorGamesDownloader
                         {
                             Link = "http://twotowersgames.com/game/" + temp + "/" + temp + ".swf",
                             OriginalName = temp + ".swf", //Извлекаем оригинальное имя файла
-                            CorrectName = NameFix(regexMatches[0].Value) //Правильное имя файла игры
+                            CorrectName = FixGameName(regexMatches[0].Value) //Правильное имя файла игры
                         });
                         gd.Reset();
                         break;
@@ -324,7 +372,7 @@ namespace ArmorGamesDownloader
                                 {
                                     Link = tempUri.AbsoluteUri,
                                     OriginalName = tempUri.Segments.Last(), //Извлекаем оригинальное имя файла
-                                    CorrectName = NameFix(tempUri.Segments.Last(), true) //Правильное имя файла игры
+                                    CorrectName = FixGameName(tempUri.Segments.Last(), true) //Правильное имя файла игры
                                 });
                             }
                         }
@@ -339,7 +387,7 @@ namespace ArmorGamesDownloader
                                 {
                                     Link = tempUri.AbsoluteUri,
                                     OriginalName = tempUri.Segments.Last(), //Извлекаем оригинальное имя файла
-                                    CorrectName = NameFix(tempUri.Segments.Last(), true) //Правильное имя файла игры
+                                    CorrectName = FixGameName(tempUri.Segments.Last(), true) //Правильное имя файла игры
                                 });
                             }
                         }
@@ -354,7 +402,7 @@ namespace ArmorGamesDownloader
                                 {
                                     Link = tempUri.AbsoluteUri,
                                     OriginalName = tempUri.Segments.Last(), //Извлекаем оригинальное имя файла
-                                    CorrectName = NameFix(tempUri.Segments.Last(), true) //Правильное имя файла игры
+                                    CorrectName = FixGameName(tempUri.Segments.Last(), true) //Правильное имя файла игры
                                 });
                             }
                         }
@@ -369,7 +417,7 @@ namespace ArmorGamesDownloader
                                 {
                                     Link = tempUri.AbsoluteUri,
                                     OriginalName = tempUri.Segments.Last(), //Извлекаем оригинальное имя файла
-                                    CorrectName = NameFix(tempUri.Segments.Last(), true) //Правильное имя файла игры
+                                    CorrectName = FixGameName(tempUri.Segments.Last(), true) //Правильное имя файла игры
                                 });
                             }
                         }
@@ -382,15 +430,17 @@ namespace ArmorGamesDownloader
             return true;
         }
 
+        private static String Evaluator(Match match)
+        {
+            //Ужас, не правда ли? =)
+            return ((char)int.Parse(match.Value.Substring(2, 4), System.Globalization.NumberStyles.Integer)).ToString();
+        }
         public static String ConvertFromCodePoint(String str)
         {
             return Regex.Replace(str, "&#[0-9]{4};", Evaluator);
         }
-        private static String Evaluator(Match match)
-        {
-            return ((char)int.Parse(match.Value.Substring(2,4), System.Globalization.NumberStyles.Integer)).ToString();
-        }
-        public static String NameFix(String str, Boolean correctName = false)
+        
+        public static String FixGameName(String str, Boolean correctName = false)
         {
             if (str == null) return null;
             if (str.Length != 0)
@@ -408,12 +458,33 @@ namespace ArmorGamesDownloader
             }
             else return str;
         }
-        public static String UrlConvert(String str)
+        public static String PrepareUrl(String stringUrl)
+        {
+            //if (stringUrl.Contains("twotowersgames")) stringUrl = stringUrl.Replace("/games/", "/embed/").Replace("preplay", "");
+
+            if (stringUrl.Contains("stickpage.com") & !stringUrl.Contains("gameplay"))
+                stringUrl = stringUrl.Replace("game", "gameplay");
+
+            else if (stringUrl.Contains("belugerinstudios"))
+                stringUrl = stringUrl.Replace("playgame&", "playgames&").Replace("&name=", "&game=");
+
+            else if (stringUrl.Contains("maxgames.com/game/")) 
+                stringUrl = stringUrl.Replace("/game/", "/play/");
+
+            else if (stringUrl.Contains("arcadetown.com") & !stringUrl.Contains("playiframe")) 
+                stringUrl = Regex.Replace(stringUrl, "(?<=arcadetown\\.com/[^/]+/).*", "playiframe.asp");
+
+            else if (stringUrl.Contains("gamesfree.ca") & !stringUrl.Contains("/play/")) 
+                stringUrl = Regex.Replace(stringUrl, "gamesfree.ca/game/[0-9]+/", x => x + "play/");
+
+            return stringUrl;
+        }
+        public static String ConvertUrl(String str)
         {
             if (str == null) return str;
             return str.Replace("%2F", "/").Replace("%3A", ":").Replace("\\", "");
         }
-        public static String ConvertAllLinksToAbsolute(String originalHtml, String Host)
+        public static String MakeLinksAbsolute(String originalHtml, String Host)
         {
             var baseUri = new Uri(Host);
             var pattern = "(?<name>src|href|value)=\"(?<value>[^\"]*)\"";
@@ -428,14 +499,14 @@ namespace ArmorGamesDownloader
                         var name = match.Groups["name"].Value;
                         return string.Format("{0}=\"{1}\"", name, uri.AbsoluteUri);
                     }
-
                     return null;
                 });
             return Regex.Replace(originalHtml, pattern, matchEvaluator);
         }
         public static Uri UriAbsolute(String Link, String Host, Boolean fromHtml = true)
         {
-            Link = UrlConvert(Link); Host = UrlConvert(Host);
+            Link = ConvertUrl(Link); 
+            Host = ConvertUrl(Host);
             Uri baseUri, uriResult;
             Boolean result;
             if (!Link.Contains("http://") & !Link.Contains("https://") & !Link.Contains("ftp://"))
@@ -462,7 +533,7 @@ namespace ArmorGamesDownloader
         }        
         
 
-        public static String FileSizeToString(long byteCount)
+        public static String GetSizeString(long byteCount)
         {
             string[] suf = { " Б", " КБ", " МБ", " ГБ", " ТБ", " ПБ"};
             if (byteCount == 0)
@@ -472,124 +543,51 @@ namespace ArmorGamesDownloader
             double num = Math.Round(bytes / Math.Pow(1024, place), 1);
             return (Math.Sign(byteCount) * num).ToString() + suf[place];
         }
-
-        public static void AppendIframe(ref String stringHtml)
+        public static String GetSizeString(long byteCount, int suffix, bool showSuffix = true)
         {
-            String stringRegEx = "(?<=<iframe[^>]+src=\")[^\"]+";
-            MatchCollection iframeMatches = new Regex(stringRegEx).Matches(stringHtml);
-            HttpWebRequest request = null;
+            string[] suf = { " Б", " КБ", " МБ", " ГБ", " ТБ", " ПБ" };
+            if (byteCount == 0)
+                return (showSuffix) ? "0" + suf[suffix] : "0";
+            long bytes = Math.Abs(byteCount);
+            int place = suffix;// Convert.ToInt32(Math.Floor(Math.Log(bytes, 1024)));
+            double num = Math.Round(bytes / Math.Pow(1024, place), 2);
+            return (Math.Sign(byteCount) * num).ToString() + (showSuffix ? suf[place] : "");
+        }
+
+        public static void AppendIframes(ref String stringHtml)
+        {
+            MatchCollection iframeMatches = new Regex(Resources.strRegexIframe).Matches(stringHtml);
+            if (iframeMatches.Count == 0) return;
+
             Uri requestUri;
-            StringBuilder sb = new StringBuilder(stringHtml);
-            if (iframeMatches.Count > 0)
+            HttpWebRequest request;            
+            StringBuilder sb = new StringBuilder();
+            String[] iframes = new String[iframeMatches.Count];
+
+            for (int i = 0; i < iframeMatches.Count; i++)
             {
-                String[] iframes = new String[iframeMatches.Count];
-                for (int i = 0; i < iframeMatches.Count; i++)
+                requestUri = UriAbsolute(iframeMatches[i].Value, null, false);
+                if (!Uri.TryCreate(Regex.Replace(iframeMatches[i].Value, "^//", "http://"), UriKind.Absolute, out requestUri))
+                    continue;
+                request = (HttpWebRequest)WebRequest.Create(requestUri);
+                try
                 {
-                    requestUri = UriAbsolute(iframeMatches[i].Value, null, false);
-                    if(!Uri.TryCreate(Regex.Replace(iframeMatches[i].Value, "^//", "http://"), UriKind.Absolute, out requestUri)) 
-                        continue;
-                    request = (HttpWebRequest)WebRequest.Create(requestUri);
-                    try
-                    {
-                        if (!UsingProxy) request.Proxy = null;
-                        request.Method = "Get";
-                        request.UserAgent = "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/27.0.1453.116 Safari/537.36";
-                        iframes[i] = (new StreamReader(((HttpWebResponse)request.GetResponse()).GetResponseStream())).ReadToEnd();
-                    }
-                    catch (WebException g)
-                    {
-                        //MessageBox.Show(g.Message);
-                        continue;
-                    }
-                    sb.Append(ConvertAllLinksToAbsolute(iframes[i], iframeMatches[i].Value));
+                    if (!UsingProxy) request.Proxy = null;
+                    request.Method = "Get";
+                    request.UserAgent = Resources.strUserAgent;
+                    iframes[i] = new StreamReader((request.GetResponse()).GetResponseStream()).ReadToEnd();
                 }
+                catch (WebException g)
+                {
+                    //MessageBox.Show(g.Message);
+                    continue;
+                }
+                sb.Append(MakeLinksAbsolute(iframes[i], iframeMatches[i].Value));
             }
-            stringHtml = sb.ToString();
+            stringHtml += sb.ToString();
         }
     }
     
-    public class GameData
-    {
-        public class FileData
-        {
-            public String Link, OriginalName, CorrectName;
-            public Nullable<Int32> FileSize;
-            public FileData()
-            {
-                Link = OriginalName = CorrectName = "";
-                FileSize = null;
-            }
-        }
-        //public List<Nullable<UInt64>> FileSizes;
-        public Int32 CurrentIndex = 0;
-        public String CurrentLink
-        {
-            get { return FileList[CurrentIndex].Link; }
-            set { FileList[CurrentIndex].Link = value; }
-        }
-        public String CurrentOriginalName
-        {
-            get { return FileList[CurrentIndex].OriginalName; }
-            set { FileList[CurrentIndex].OriginalName = value; }
-        }
-        public String CurrentCorrectName
-        {
-            get { return FileList[CurrentIndex].CorrectName; }
-            set { FileList[CurrentIndex].CorrectName = value; }
-        }
-        public Int32? CurrentFileSize
-        {
-            get { return FileList[CurrentIndex].FileSize; }
-            set { FileList[CurrentIndex].FileSize = value; }
-        }
-        public SiteNameEnum Target;
-        public Boolean ExternalLink;
-        //public List<String> LinkList;
-        //public List<String> OriginalNamesList;
-        //public List<String> CorrectNamesList;
-        public List<FileData> FileList;
-        public GameData()
-        {
-            /*LinkList = new List<String>();
-            FileSizes = new List<Nullable<UInt64>>();
-            OriginalNamesList = new List<string>();
-            CorrectNamesList = new List<string>();*/
-            FileList = new List<FileData>();
-            //Link = OriginalName = CorrectName = "";
-            Target = SiteNameEnum.Other;
-            ExternalLink = false;
-            CurrentIndex = 0;
-        }
-        /*public void ChangeTo(Int32 Index)
-        {
-            if (FileList.Count < Index + 1 | Index < 0) return;
-            CurrentLink = FileList[Index].Link;
-            CorrectName = CorrectNamesList[Index];
-            OriginalName = OriginalNamesList[Index];
-
-        }*/
-        public FileData this[int i]
-        {
-            get
-            {
-                if (i < 0 | i >= FileList.Count | FileList.Count == 0) return null;
-                return FileList[i];
-            }
-            set
-            {
-                if (i >= 0 & i < FileList.Count)
-                    FileList[i] = value;
-            }
-        }
-        public void Reset()
-        {
-            /*LinkList = LinkList.Distinct().ToList();
-            CorrectNamesList = CorrectNamesList.Distinct().ToList();
-            OriginalNamesList = OriginalNamesList.Distinct().ToList();*/
-            //ChangeTo(0);
-            FileList = MoreEnumerable.DistinctBy(FileList, x => x.Link).ToList();
-            CurrentIndex = 0;
-        }
-    }
+    
     
 }

@@ -89,5 +89,131 @@ namespace ArmorGamesDownloader.Properties {
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to D:\[Files]\[Flash Games]\.
+        /// </summary>
+        public static string strAndaDir {
+            get {
+                return ResourceManager.GetString("strAndaDir", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ссылка скопирована в буфер обмена..
+        /// </summary>
+        public static string strCopiedToClipboard {
+            get {
+                return ResourceManager.GetString("strCopiedToClipboard", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ошибка скачивания файла!.
+        /// </summary>
+        public static string strDownloadError {
+            get {
+                return ResourceManager.GetString("strDownloadError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Скачивание файла....
+        /// </summary>
+        public static string strDownloadingFile {
+            get {
+                return ResourceManager.GetString("strDownloadingFile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Скачивание файла завершено..
+        /// </summary>
+        public static string strDownloadSuccess {
+            get {
+                return ResourceManager.GetString("strDownloadSuccess", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Затраченное время: .
+        /// </summary>
+        public static string strElapsedTime {
+            get {
+                return ResourceManager.GetString("strElapsedTime", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ошибка!.
+        /// </summary>
+        public static string strError {
+            get {
+                return ResourceManager.GetString("strError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Поле адреса не может быть пустым!.
+        /// </summary>
+        public static string strErrorEmptyUrl {
+            get {
+                return ResourceManager.GetString("strErrorEmptyUrl", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Файл standard_menu.ini не найден!.
+        /// </summary>
+        public static string strIntegrationOperaNotFound {
+            get {
+                return ResourceManager.GetString("strIntegrationOperaNotFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Интеграция завершена успешно!.
+        /// </summary>
+        public static string strIntegrationSuccess {
+            get {
+                return ResourceManager.GetString("strIntegrationSuccess", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to --------------------666.
+        /// </summary>
+        public static string strOperaPrefix {
+            get {
+                return ResourceManager.GetString("strOperaPrefix", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to (?&lt;=&lt;iframe[^&gt;]+src=&quot;)[^&quot;&apos;]+.
+        /// </summary>
+        public static string strRegexIframe {
+            get {
+                return ResourceManager.GetString("strRegexIframe", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to [\[\(\)\]a-zA-Z0-9%:_/\.=-]+\.swf.
+        /// </summary>
+        public static string strRegexSwf {
+            get {
+                return ResourceManager.GetString("strRegexSwf", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/27.0.1453.116 Safari/537.36.
+        /// </summary>
+        public static string strUserAgent {
+            get {
+                return ResourceManager.GetString("strUserAgent", resourceCulture);
+            }
+        }
     }
 }

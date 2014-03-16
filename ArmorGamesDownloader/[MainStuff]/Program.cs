@@ -1,13 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
+using ArmorGamesDownloader.Extensions;
 
 namespace ArmorGamesDownloader
 {
-	public struct Wnd
-	{
-		public static String Name = "ArmorGamesDownloader " + System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.ToString();
-	}
+	
 	static class Program
 	{
 		

@@ -127,4 +127,46 @@
   <data name="SaveBig" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\SaveBig.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="strAndaDir" xml:space="preserve">
+    <value>D:\[Files]\[Flash Games]\</value>
+  </data>
+  <data name="strCopiedToClipboard" xml:space="preserve">
+    <value>Ссылка скопирована в буфер обмена.</value>
+  </data>
+  <data name="strDownloadError" xml:space="preserve">
+    <value>Ошибка скачивания файла!</value>
+  </data>
+  <data name="strDownloadingFile" xml:space="preserve">
+    <value>Скачивание файла...</value>
+  </data>
+  <data name="strDownloadSuccess" xml:space="preserve">
+    <value>Скачивание файла завершено.</value>
+  </data>
+  <data name="strElapsedTime" xml:space="preserve">
+    <value>Затраченное время: </value>
+  </data>
+  <data name="strError" xml:space="preserve">
+    <value>Ошибка!</value>
+  </data>
+  <data name="strErrorEmptyUrl" xml:space="preserve">
+    <value>Поле адреса не может быть пустым!</value>
+  </data>
+  <data name="strIntegrationOperaNotFound" xml:space="preserve">
+    <value>Файл standard_menu.ini не найден!</value>
+  </data>
+  <data name="strIntegrationSuccess" xml:space="preserve">
+    <value>Интеграция завершена успешно!</value>
+  </data>
+  <data name="strOperaPrefix" xml:space="preserve">
+    <value>--------------------666</value>
+  </data>
+  <data name="strRegexIframe" xml:space="preserve">
+    <value>(?&lt;=&lt;iframe[^&gt;]+src=")[^"']+</value>
+  </data>
+  <data name="strRegexSwf" xml:space="preserve">
+    <value>[\[\(\)\]a-zA-Z0-9%:_/\.=-]+\.swf</value>
+  </data>
+  <data name="strUserAgent" xml:space="preserve">
+    <value>Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/27.0.1453.116 Safari/537.36</value>
+  </data>
 </root>

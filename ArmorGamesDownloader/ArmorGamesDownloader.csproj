@@ -40,7 +40,7 @@
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>Download.Com.ico</ApplicationIcon>
+    <ApplicationIcon>Resources\Download.Com.ico</ApplicationIcon>
   </PropertyGroup>
   <PropertyGroup />
   <PropertyGroup>
@@ -64,30 +64,33 @@
     <Reference Include="WindowsFormsIntegration" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Code.cs">
+    <Compile Include="Forms\BackgroundWorker.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Extractor.cs" />
-    <Compile Include="frmLinks.cs">
+    <Compile Include="Extensions\EnumExtension.cs" />
+    <Compile Include="MyStuff\Extractor.cs" />
+    <Compile Include="Forms\frmLinks.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frmLinks.Designer.cs">
+    <Compile Include="Forms\frmLinks.Designer.cs">
       <DependentUpon>frmLinks.cs</DependentUpon>
     </Compile>
-    <Compile Include="frmMain.cs">
+    <Compile Include="Forms\frmMain.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frmMain.Designer.cs">
+    <Compile Include="Forms\frmMain.Designer.cs">
       <DependentUpon>frmMain.cs</DependentUpon>
     </Compile>
-    <Compile Include="GlobalSuppressions.cs" />
-    <Compile Include="Instance.cs" />
-    <Compile Include="Program.cs" />
+    <Compile Include="MyStuff\GameData.cs" />
+    <Compile Include="[MainStuff]\GlobalSuppressions.cs" />
+    <Compile Include="[MainStuff]\Instance.cs" />
+    <Compile Include="[MainStuff]\Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="frmLinks.resx">
+    <Compile Include="Extensions\Wnd.cs" />
+    <EmbeddedResource Include="Forms\frmLinks.resx">
       <DependentUpon>frmLinks.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="frmMain.resx">
+    <EmbeddedResource Include="Forms\frmMain.resx">
       <DependentUpon>frmMain.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
@@ -96,8 +99,8 @@
       <SubType>Designer</SubType>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <None Include="app.config" />
-    <None Include="packages.config" />
+    <None Include="[MainStuff]\app.config" />
+    <None Include="[MainStuff]\packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -114,7 +117,7 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Download.Com.ico" />
+    <Content Include="Resources\Download.Com.ico" />
     <None Include="Resources\SaveBig.png" />
     <Content Include="Resources\Search.png" />
     <None Include="Resources\Copy.png" />
